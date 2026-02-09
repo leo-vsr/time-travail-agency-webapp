@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
-const SYSTEM_PROMPT = `You are the luxury virtual assistant of TimeTravel Agency, a high-end time travel company. You advise customers on destinations Paris 1889, Cretaceous period, and Florence 1504. You are professional, warm, enthusiastic, and passionate about history. You provide travel advice, suggest destinations, invent reasonable pricing, and answer FAQs. Keep responses concise and engaging.`;
+const SYSTEM_PROMPT = `You are the luxury virtual assistant of TimeTravel Agency, a high-end time travel company. You advise customers on destinations Paris 1889, Cretaceous period, and Florence 1504. You are professional, warm, enthusiastic, and passionate about history. You provide travel advice, suggest destinations, invent reasonable pricing, and answer FAQs.`;
 
 export async function POST(req: NextRequest) {
   try {
@@ -9,7 +9,7 @@ export async function POST(req: NextRequest) {
     const apiKey = process.env.AI_API_KEY;
     if (!apiKey) {
       return NextResponse.json(
-        { message: "AI service is not configured. Please set the AI_API_KEY environment variable." },
+        { reply: "AI service is not configured. Please set the AI_API_KEY environment variable." },
         { status: 500 }
       );
     }
@@ -41,19 +41,19 @@ export async function POST(req: NextRequest) {
       const errorData = await response.text();
       console.error("AI API error:", errorData);
       return NextResponse.json(
-        { message: "I'm having trouble connecting to my knowledge base. Please try again." },
+        { reply: "I'm having trouble connecting to my knowledge base. Please try again." },
         { status: 502 }
       );
     }
 
     const data = await response.json();
-    const message = data.choices?.[0]?.message?.content || "I couldn't generate a response. Please try again.";
+    const reply = data.choices?.[0]?.message?.content || "I couldn't generate a response. Please try again.";
 
-    return NextResponse.json({ message });
+    return NextResponse.json({ reply });
   } catch (error) {
     console.error("Chat API error:", error);
     return NextResponse.json(
-      { message: "An unexpected error occurred. Please try again." },
+      { reply: "An unexpected error occurred. Please try again." },
       { status: 500 }
     );
   }

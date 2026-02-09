@@ -44,7 +44,7 @@ export default function Chatbot() {
       if (!res.ok) throw new Error("Failed to get response");
 
       const data = await res.json();
-      setMessages([...newMessages, { role: "assistant", content: data.message }]);
+      setMessages([...newMessages, { role: "assistant", content: data.reply }]);
     } catch {
       setMessages([
         ...newMessages,
