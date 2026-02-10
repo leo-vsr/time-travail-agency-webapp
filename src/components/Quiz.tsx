@@ -129,53 +129,78 @@ export default function Quiz() {
               exit={{ opacity: 0, y: -20 }}
               className="text-center"
             >
-              <button
+              <motion.button
                 onClick={() => setStarted(true)}
-                className="px-8 py-4 bg-gold text-background font-semibold rounded-full hover:bg-gold-light transition-colors duration-300 shadow-lg shadow-gold/20 cursor-pointer"
+                whileHover={{ scale: 1.05, boxShadow: "0 20px 40px rgba(212, 175, 55, 0.3)" }}
+                whileTap={{ scale: 0.95 }}
+                className="px-8 py-4 bg-gold text-background font-semibold rounded-full transition-colors duration-300 shadow-lg shadow-gold/20 cursor-pointer"
               >
                 Commencer le Quiz
-              </button>
+              </motion.button>
             </motion.div>
           )}
 
           {started && !result && (
             <motion.div
               key={`q-${currentQ}`}
-              initial={{ opacity: 0, x: 30 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -30 }}
-              transition={{ duration: 0.4 }}
-              className="bg-surface-light rounded-2xl p-8 border border-white/5"
+              initial={{ opacity: 0, x: 50, scale: 0.95 }}
+              animate={{ opacity: 1, x: 0, scale: 1 }}
+              exit={{ opacity: 0, x: -50, scale: 0.95 }}
+              transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+              className="bg-surface-light rounded-2xl p-8 border border-white/5 shadow-xl"
             >
               <div className="flex items-center justify-between mb-6">
-                <span className="text-sm text-muted">
+                <motion.span
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="text-sm text-muted"
+                >
                   Question {currentQ + 1} sur {questions.length}
-                </span>
+                </motion.span>
                 <div className="flex gap-1.5">
                   {questions.map((_, i) => (
-                    <div
+                    <motion.div
                       key={i}
-                      className={`w-8 h-1 rounded-full transition-colors duration-300 ${
-                        i <= currentQ ? "bg-gold" : "bg-white/10"
+                      initial={{ scaleX: 0 }}
+                      animate={{ scaleX: 1 }}
+                      transition={{ delay: i * 0.1 }}
+                      className={`w-8 h-1 rounded-full transition-all duration-500 ${
+                        i <= currentQ ? "bg-gold shadow-sm shadow-gold/50" : "bg-white/10"
                       }`}
                     />
                   ))}
                 </div>
               </div>
 
-              <h3 className="text-xl font-semibold mb-6">
+              <motion.h3
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2 }}
+                className="text-xl font-semibold mb-6"
+              >
                 {questions[currentQ].question}
-              </h3>
+              </motion.h3>
 
               <div className="flex flex-col gap-3">
                 {questions[currentQ].options.map((option, i) => (
-                  <button
+                  <motion.button
                     key={i}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.3 + i * 0.1 }}
+                    whileHover={{ scale: 1.02, x: 4 }}
+                    whileTap={{ scale: 0.98 }}
                     onClick={() => handleAnswer(option.scores)}
-                    className="w-full text-left px-6 py-4 rounded-xl border border-white/10 hover:border-gold/50 hover:bg-gold/5 transition-all duration-300 text-sm cursor-pointer"
+                    className="w-full text-left px-6 py-4 rounded-xl border border-white/10 hover:border-gold/50 hover:bg-gold/5 transition-all duration-300 text-sm cursor-pointer relative overflow-hidden group"
                   >
-                    {option.label}
-                  </button>
+                    <span className="relative z-10">{option.label}</span>
+                    <motion.div
+                      className="absolute inset-0 bg-gold/5"
+                      initial={{ x: "-100%" }}
+                      whileHover={{ x: 0 }}
+                      transition={{ duration: 0.3 }}
+                    />
+                  </motion.button>
                 ))}
               </div>
             </motion.div>
@@ -184,10 +209,10 @@ export default function Quiz() {
           {result && (
             <motion.div
               key="result"
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.5 }}
-              className="bg-surface-light rounded-2xl overflow-hidden border border-gold/20"
+              initial={{ opacity: 0, scale: 0.9, y: 30 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+              className="bg-surface-light rounded-2xl overflow-hidden border border-gold/20 shadow-2xl shadow-gold/10"
             >
               <div className="relative h-48">
                 <Image
@@ -200,21 +225,41 @@ export default function Quiz() {
                 <div className="absolute inset-0 bg-gradient-to-t from-surface-light to-transparent" />
               </div>
               <div className="p-8 text-center">
-                <p className="text-sm text-gold mb-2 font-medium uppercase tracking-wider">
+                <motion.p
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.2 }}
+                  className="text-sm text-gold mb-2 font-medium uppercase tracking-wider"
+                >
                   Votre destination idéale
-                </p>
-                <h3 className="text-2xl font-bold mb-4">
+                </motion.p>
+                <motion.h3
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.3 }}
+                  className="text-2xl font-bold mb-4"
+                >
                   {results[result].title}
-                </h3>
-                <p className="text-muted leading-relaxed mb-8">
+                </motion.h3>
+                <motion.p
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.4 }}
+                  className="text-muted leading-relaxed mb-8"
+                >
                   {results[result].description}
-                </p>
-                <button
+                </motion.p>
+                <motion.button
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.5 }}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
                   onClick={reset}
                   className="px-6 py-3 border border-gold/40 text-gold rounded-full text-sm font-medium hover:bg-gold hover:text-background transition-all duration-300 cursor-pointer"
                 >
                   Refaire le Quiz
-                </button>
+                </motion.button>
               </div>
             </motion.div>
           )}

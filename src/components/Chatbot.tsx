@@ -68,8 +68,12 @@ export default function Chatbot() {
   return (
     <>
       {/* Chat bubble */}
-      <button
+      <motion.button
         onClick={() => setOpen(!open)}
+        whileHover={{ scale: 1.1, rotate: 5 }}
+        whileTap={{ scale: 0.9 }}
+        animate={open ? {} : { y: [0, -10, 0] }}
+        transition={open ? {} : { duration: 2, repeat: Infinity, ease: "easeInOut" }}
         className="fixed bottom-6 right-6 z-50 w-14 h-14 bg-gold rounded-full flex items-center justify-center shadow-lg shadow-gold/30 hover:bg-gold-light transition-colors duration-300 cursor-pointer"
         aria-label="Open chat"
       >
@@ -105,16 +109,16 @@ export default function Chatbot() {
             <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
           </svg>
         )}
-      </button>
+      </motion.button>
 
       {/* Chat window */}
       <AnimatePresence>
         {open && (
           <motion.div
-            initial={{ opacity: 0, y: 20, scale: 0.95 }}
+            initial={{ opacity: 0, y: 30, scale: 0.9 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 20, scale: 0.95 }}
-            transition={{ duration: 0.2 }}
+            exit={{ opacity: 0, y: 30, scale: 0.9 }}
+            transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
             className="fixed bottom-24 right-6 z-50 w-[360px] max-w-[calc(100vw-48px)] h-[500px] bg-surface border border-white/10 rounded-2xl shadow-2xl flex flex-col overflow-hidden"
           >
             {/* Header */}
@@ -126,33 +130,53 @@ export default function Chatbot() {
             {/* Messages */}
             <div className="flex-1 overflow-y-auto p-4 space-y-3">
               {messages.map((msg, i) => (
-                <div
+                <motion.div
                   key={i}
+                  initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  transition={{ duration: 0.3, ease: "easeOut" }}
                   className={`flex ${
                     msg.role === "user" ? "justify-end" : "justify-start"
                   }`}
                 >
-                  <div
+                  <motion.div
+                    whileHover={{ scale: 1.02 }}
                     className={`max-w-[80%] px-4 py-2.5 rounded-2xl text-sm leading-relaxed ${
                       msg.role === "user"
-                        ? "bg-gold text-background rounded-br-md"
+                        ? "bg-gold text-background rounded-br-md shadow-md"
                         : "bg-surface-light text-foreground rounded-bl-md"
                     }`}
                   >
                     {msg.content}
-                  </div>
-                </div>
+                  </motion.div>
+                </motion.div>
               ))}
               {loading && (
-                <div className="flex justify-start">
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="flex justify-start"
+                >
                   <div className="bg-surface-light px-4 py-3 rounded-2xl rounded-bl-md">
                     <div className="flex gap-1.5">
-                      <span className="w-2 h-2 bg-muted rounded-full animate-bounce [animation-delay:0ms]" />
-                      <span className="w-2 h-2 bg-muted rounded-full animate-bounce [animation-delay:150ms]" />
-                      <span className="w-2 h-2 bg-muted rounded-full animate-bounce [animation-delay:300ms]" />
+                      <motion.span
+                        animate={{ y: [0, -8, 0] }}
+                        transition={{ duration: 0.6, repeat: Infinity, ease: "easeInOut" }}
+                        className="w-2 h-2 bg-gold rounded-full"
+                      />
+                      <motion.span
+                        animate={{ y: [0, -8, 0] }}
+                        transition={{ duration: 0.6, repeat: Infinity, ease: "easeInOut", delay: 0.15 }}
+                        className="w-2 h-2 bg-gold rounded-full"
+                      />
+                      <motion.span
+                        animate={{ y: [0, -8, 0] }}
+                        transition={{ duration: 0.6, repeat: Infinity, ease: "easeInOut", delay: 0.3 }}
+                        className="w-2 h-2 bg-gold rounded-full"
+                      />
                     </div>
                   </div>
-                </div>
+                </motion.div>
               )}
               <div ref={messagesEndRef} />
             </div>
@@ -160,21 +184,24 @@ export default function Chatbot() {
             {/* Input */}
             <div className="p-3 border-t border-white/5">
               <div className="flex gap-2">
-                <input
+                <motion.input
                   type="text"
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
                   onKeyDown={handleKeyDown}
                   placeholder="Posez une question sur nos destinations..."
+                  whileFocus={{ scale: 1.01 }}
                   className="flex-1 bg-surface-light border border-white/10 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-gold/50 transition-colors placeholder:text-muted"
                 />
-                <button
+                <motion.button
                   onClick={sendMessage}
                   disabled={loading || !input.trim()}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
                   className="px-4 py-2.5 bg-gold text-background rounded-xl text-sm font-medium hover:bg-gold-light transition-colors disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
                 >
                   Envoyer
-                </button>
+                </motion.button>
               </div>
             </div>
           </motion.div>

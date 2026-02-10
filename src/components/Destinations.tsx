@@ -91,36 +91,75 @@ export default function Destinations() {
           {destinations.map((dest, i) => (
             <motion.div
               key={dest.id}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, y: 50, rotateX: 10 }}
+              whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
               viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.6, delay: i * 0.15 }}
-              className="group bg-surface rounded-2xl overflow-hidden border border-white/5 hover:border-gold/30 transition-all duration-500 shadow-lg hover:shadow-gold/10"
+              transition={{ 
+                duration: 0.7, 
+                delay: i * 0.15,
+                ease: [0.22, 1, 0.36, 1]
+              }}
+              whileHover={{ 
+                y: -8,
+                transition: { duration: 0.3 }
+              }}
+              className="group bg-surface rounded-2xl overflow-hidden border border-white/5 hover:border-gold/30 transition-all duration-500 shadow-lg hover:shadow-2xl hover:shadow-gold/20"
             >
               <div className="relative h-56 overflow-hidden">
-                <Image
-                  src={dest.image}
-                  alt={dest.title}
-                  fill
-                  className="object-cover transition-transform duration-700 group-hover:scale-110"
-                  sizes="(max-width: 768px) 100vw, 33vw"
+                <motion.div
+                  whileHover={{ scale: 1.1 }}
+                  transition={{ duration: 0.6, ease: "easeOut" }}
+                  className="w-full h-full"
+                >
+                  <Image
+                    src={dest.image}
+                    alt={dest.title}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                  />
+                </motion.div>
+                <div className="absolute inset-0 bg-gradient-to-t from-surface via-surface/50 to-transparent opacity-80 group-hover:opacity-60 transition-opacity duration-500" />
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  whileHover={{ opacity: 1 }}
+                  className="absolute inset-0 bg-gold/5"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-surface to-transparent" />
               </div>
 
               <div className="p-6">
-                <h3 className="text-xl font-bold mb-3 text-gold">
-                  {dest.title}
-                </h3>
-                <p className="text-sm text-muted leading-relaxed mb-6">
-                  {dest.description}
-                </p>
-                <button
-                  onClick={() => setSelectedDest(dest.id)}
-                  className="w-full py-3 rounded-xl border border-gold/40 text-gold text-sm font-medium hover:bg-gold hover:text-background transition-all duration-300 cursor-pointer"
+                <motion.h3
+                  className="text-xl font-bold mb-3 text-gold"
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.15 + 0.2 }}
                 >
-                  En savoir plus
-                </button>
+                  {dest.title}
+                </motion.h3>
+                <motion.p
+                  className="text-sm text-muted leading-relaxed mb-6"
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.15 + 0.3 }}
+                >
+                  {dest.description}
+                </motion.p>
+                <motion.button
+                  onClick={() => setSelectedDest(dest.id)}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="w-full py-3 rounded-xl border border-gold/40 text-gold text-sm font-medium hover:bg-gold hover:text-background transition-all duration-300 cursor-pointer relative overflow-hidden group/btn"
+                >
+                  <span className="relative z-10">En savoir plus</span>
+                  <motion.div
+                    className="absolute inset-0 bg-gold"
+                    initial={{ x: "-100%" }}
+                    whileHover={{ x: 0 }}
+                    transition={{ duration: 0.3 }}
+                  />
+                </motion.button>
               </div>
             </motion.div>
           ))}
@@ -134,15 +173,18 @@ export default function Destinations() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
+            transition={{ duration: 0.3 }}
             className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm"
             onClick={() => setSelectedDest(null)}
           >
             <motion.div
-              initial={{ opacity: 0, scale: 0.9, y: 20 }}
+              initial={{ opacity: 0, scale: 0.9, y: 30 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.9, y: 20 }}
-              transition={{ duration: 0.3 }}
+              exit={{ opacity: 0, scale: 0.9, y: 30 }}
+              transition={{ 
+                duration: 0.4,
+                ease: [0.22, 1, 0.36, 1]
+              }}
               className="bg-surface border border-white/10 rounded-2xl max-w-lg w-full max-h-[85vh] overflow-y-auto shadow-2xl"
               onClick={(e) => e.stopPropagation()}
             >
@@ -155,12 +197,15 @@ export default function Destinations() {
                   sizes="(max-width: 768px) 100vw, 512px"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-surface to-transparent" />
-                <button
+                <motion.button
                   onClick={() => setSelectedDest(null)}
+                  whileHover={{ scale: 1.1, rotate: 90 }}
+                  whileTap={{ scale: 0.9 }}
+                  transition={{ duration: 0.2 }}
                   className="absolute top-4 right-4 w-8 h-8 bg-black/50 rounded-full flex items-center justify-center text-white hover:bg-black/70 transition-colors cursor-pointer"
                 >
                   ✕
-                </button>
+                </motion.button>
               </div>
 
               <div className="p-6">
@@ -185,13 +230,16 @@ export default function Destinations() {
                 </h4>
                 <ul className="space-y-2 mb-6">
                   {selected.details.highlights.map((h, i) => (
-                    <li
+                    <motion.li
                       key={i}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.1 + i * 0.05 }}
                       className="flex items-start gap-2 text-sm text-muted"
                     >
                       <span className="text-gold mt-0.5">•</span>
                       {h}
-                    </li>
+                    </motion.li>
                   ))}
                 </ul>
 
@@ -202,12 +250,14 @@ export default function Destinations() {
                   {selected.details.included}
                 </p>
 
-                <button
+                <motion.button
                   onClick={() => setSelectedDest(null)}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
                   className="w-full py-3 bg-gold text-background rounded-xl text-sm font-semibold hover:bg-gold-light transition-colors duration-300 cursor-pointer"
                 >
                   Fermer
-                </button>
+                </motion.button>
               </div>
             </motion.div>
           </motion.div>
