@@ -8,7 +8,7 @@ A luxury futuristic time travel agency webapp built as a school project. Browse 
 - **TypeScript**
 - **Tailwind CSS v4**
 - **Framer Motion** — scroll & hover animations
-- **OpenRouter API** — AI chatbot backend (free model: `mistralai/mistral-small:free`)
+- **OpenRouter API** — AI chatbot backend (free model: `z-ai/glm-4.5-air:free`)
 
 ## Features
 
@@ -56,14 +56,14 @@ cp .env.example .env.local
 ```
 AI_API_KEY=sk-or-xxxxxxxxxxxxxxxx
 AI_API_BASE=https://openrouter.ai/api/v1
-AI_MODEL=mistralai/mistral-small:free
+AI_MODEL=z-ai/glm-4.5-air:free
 ```
 
 | Variable | Required | Description |
 |---|---|---|
 | `AI_API_KEY` | Yes | Votre clé API OpenRouter |
 | `AI_API_BASE` | No | URL de base (défaut : `https://openrouter.ai/api/v1`) |
-| `AI_MODEL` | No | Modèle (défaut : `mistralai/mistral-small:free`, fallback : `qwen/qwen2.5-7b-instruct:free`) |
+| `AI_MODEL` | No | Modèle (défaut : `z-ai/glm-4.5-air:free`, alternatives : `mistralai/mistral-small-3.1-24b-instruct:free`, `meta-llama/llama-3.3-70b-instruct:free`) |
 
 > **Note :** Ne jamais commit `.env.local`. Le fichier `.env.example` est fourni comme référence.
 
@@ -89,7 +89,7 @@ npm start
 3. Add environment variables in **Settings → Environment Variables** :
    - `AI_API_KEY` = votre clé OpenRouter
    - `AI_API_BASE` = `https://openrouter.ai/api/v1`
-   - `AI_MODEL` = `mistralai/mistral-small:free`
+   - `AI_MODEL` = `z-ai/glm-4.5-air:free`
 4. Deploy — zero extra config needed
 
 ## Project Structure

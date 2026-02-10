@@ -15,7 +15,7 @@ export async function POST(req: NextRequest) {
     }
 
     const apiBase = process.env.AI_API_BASE || "https://openrouter.ai/api/v1";
-    const model = process.env.AI_MODEL || "mistralai/mistral-small:free";
+    const model = process.env.AI_MODEL || "z-ai/glm-4.5-air:free";
 
     const response = await fetch(`${apiBase}/chat/completions`, {
       method: "POST",
@@ -41,7 +41,7 @@ export async function POST(req: NextRequest) {
 
     if (!response.ok) {
       const errorData = await response.text();
-      console.error("AI API error:", errorData);
+      console.error("AI API error:", response.status, errorData);
       return NextResponse.json(
         { reply: "I'm having trouble connecting to my knowledge base. Please try again." },
         { status: 502 }
