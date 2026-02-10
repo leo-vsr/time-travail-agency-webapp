@@ -13,35 +13,35 @@ interface Question {
 
 const questions: Question[] = [
   {
-    question: "What type of experience are you looking for?",
+    question: "Quel type d\u2019exp\u00e9rience recherchez-vous ?",
     options: [
-      { label: "Cultural & artistic", scores: { paris: 1, cretaceous: 0, florence: 2 } },
-      { label: "Adventure & nature", scores: { paris: 0, cretaceous: 2, florence: 0 } },
-      { label: "Elegance & refinement", scores: { paris: 2, cretaceous: 0, florence: 1 } },
+      { label: "Culturelle & artistique", scores: { paris: 1, cretaceous: 0, florence: 2 } },
+      { label: "Aventure & nature", scores: { paris: 0, cretaceous: 2, florence: 0 } },
+      { label: "\u00c9l\u00e9gance & raffinement", scores: { paris: 2, cretaceous: 0, florence: 1 } },
     ],
   },
   {
-    question: "Which era fascinates you the most?",
+    question: "Quelle \u00e9poque vous fascine le plus ?",
     options: [
-      { label: "Modern history", scores: { paris: 2, cretaceous: 0, florence: 0 } },
-      { label: "Ancient times", scores: { paris: 0, cretaceous: 2, florence: 0 } },
+      { label: "Histoire moderne", scores: { paris: 2, cretaceous: 0, florence: 0 } },
+      { label: "Temps anciens", scores: { paris: 0, cretaceous: 2, florence: 0 } },
       { label: "Renaissance", scores: { paris: 0, cretaceous: 0, florence: 2 } },
     ],
   },
   {
-    question: "What do you prefer?",
+    question: "Que pr\u00e9f\u00e9rez-vous ?",
     options: [
-      { label: "Urban energy", scores: { paris: 2, cretaceous: 0, florence: 1 } },
-      { label: "Wild nature", scores: { paris: 0, cretaceous: 2, florence: 0 } },
+      { label: "\u00c9nergie urbaine", scores: { paris: 2, cretaceous: 0, florence: 1 } },
+      { label: "Nature sauvage", scores: { paris: 0, cretaceous: 2, florence: 0 } },
       { label: "Art & architecture", scores: { paris: 1, cretaceous: 0, florence: 2 } },
     ],
   },
   {
-    question: "What is your ideal activity?",
+    question: "Quelle serait votre activit\u00e9 id\u00e9ale ?",
     options: [
-      { label: "Visiting monuments", scores: { paris: 2, cretaceous: 0, florence: 1 } },
-      { label: "Observing wildlife", scores: { paris: 0, cretaceous: 2, florence: 0 } },
-      { label: "Exploring museums", scores: { paris: 1, cretaceous: 0, florence: 2 } },
+      { label: "Visiter des monuments", scores: { paris: 2, cretaceous: 0, florence: 1 } },
+      { label: "Observer la faune", scores: { paris: 0, cretaceous: 2, florence: 0 } },
+      { label: "Explorer des mus\u00e9es", scores: { paris: 1, cretaceous: 0, florence: 2 } },
     ],
   },
 ];
@@ -50,19 +50,19 @@ const results: Record<Destination, { title: string; description: string; image: 
   paris: {
     title: "Paris 1889",
     description:
-      "You belong in the City of Light! Your refined taste and love for culture make the Belle Époque your perfect era. Enjoy the Universal Exposition, marvel at the brand-new Eiffel Tower, and dine in the finest Parisian salons.",
+      "Vous appartenez à la Ville Lumière ! Votre goût raffiné et votre amour de la culture font de la Belle Époque votre époque idéale. Profitez de l’Exposition Universelle, émerveillez-vous devant la Tour Eiffel et dînez dans les plus beaux salons parisiens.",
     image: "/assets/1-1_paris_image.png",
   },
   cretaceous: {
-    title: "Cretaceous −65M",
+    title: "Crétacé −65M",
     description:
-      "You are a true adventurer! The prehistoric world calls to you. Walk among dinosaurs, explore untouched landscapes, and experience nature at its most primal and awe-inspiring.",
+      "Vous êtes un véritable aventurier ! Le monde préhistorique vous appelle. Marchez parmi les dinosaures, explorez des paysages vierges et vivez la nature dans sa forme la plus brute et majestueuse.",
     image: "/assets/1-1_cretace_image.png",
   },
   florence: {
     title: "Florence 1504",
     description:
-      "You have the soul of an artist! Renaissance Florence is your destiny. Witness Michelangelo's genius firsthand, explore magnificent palaces, and immerse yourself in the birth of modern art.",
+      "Vous avez l’âme d’un artiste ! Florence à la Renaissance est votre destin. Découvrez le génie de Michel-Ange, explorez de magnifiques palais et plongez dans la naissance de l’art moderne.",
     image: "/assets/1-1_florence_image.png",
   },
 };
@@ -112,11 +112,11 @@ export default function Quiz() {
           className="text-center mb-12"
         >
           <h2 className="text-3xl md:text-5xl font-bold mb-4">
-            Find Your <span className="text-gold">Destination</span>
+            Trouvez votre <span className="text-gold">Destination</span>
           </h2>
           <p className="text-muted max-w-xl mx-auto">
-            Answer 4 quick questions and we&apos;ll recommend the perfect time
-            travel experience for you.
+            Répondez à 4 questions rapides et nous vous recommanderons
+            l&apos;expérience de voyage temporel idéale pour vous.
           </p>
         </motion.div>
 
@@ -133,7 +133,7 @@ export default function Quiz() {
                 onClick={() => setStarted(true)}
                 className="px-8 py-4 bg-gold text-background font-semibold rounded-full hover:bg-gold-light transition-colors duration-300 shadow-lg shadow-gold/20 cursor-pointer"
               >
-                Start the Quiz
+                Commencer le Quiz
               </button>
             </motion.div>
           )}
@@ -149,7 +149,7 @@ export default function Quiz() {
             >
               <div className="flex items-center justify-between mb-6">
                 <span className="text-sm text-muted">
-                  Question {currentQ + 1} of {questions.length}
+                  Question {currentQ + 1} sur {questions.length}
                 </span>
                 <div className="flex gap-1.5">
                   {questions.map((_, i) => (
@@ -201,7 +201,7 @@ export default function Quiz() {
               </div>
               <div className="p-8 text-center">
                 <p className="text-sm text-gold mb-2 font-medium uppercase tracking-wider">
-                  Your perfect destination
+                  Votre destination idéale
                 </p>
                 <h3 className="text-2xl font-bold mb-4">
                   {results[result].title}
@@ -213,7 +213,7 @@ export default function Quiz() {
                   onClick={reset}
                   className="px-6 py-3 border border-gold/40 text-gold rounded-full text-sm font-medium hover:bg-gold hover:text-background transition-all duration-300 cursor-pointer"
                 >
-                  Retake Quiz
+                  Refaire le Quiz
                 </button>
               </div>
             </motion.div>

@@ -3,15 +3,15 @@ export default function Footer() {
     <footer className="border-t border-white/5 bg-surface py-12">
       <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6">
         <p className="text-sm text-muted">
-          &copy; {new Date().getFullYear()} TimeTravel Agency. All rights
-          reserved.
+          &copy; {new Date().getFullYear()} TimeTravel Agency. Tous droits
+          réservés.
         </p>
         <div className="flex items-center gap-6">
           <a
             href="#hero"
             className="text-sm text-muted hover:text-gold transition-colors duration-300"
           >
-            Home
+            Accueil
           </a>
           <a
             href="#destinations"

@@ -24,9 +24,9 @@ export default function Hero() {
           transition={{ duration: 0.8, ease: "easeOut" }}
           className="text-5xl md:text-7xl font-bold tracking-tight mb-6"
         >
-          Travel{" "}
-          <span className="text-gold">Beyond</span>{" "}
-          Time
+          Voyagez{" "}
+          <span className="text-gold">au-delà</span>{" "}
+          du Temps
         </motion.h1>
 
         <motion.p
@@ -35,8 +35,8 @@ export default function Hero() {
           transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
           className="text-lg md:text-xl text-muted max-w-2xl mx-auto mb-10"
         >
-          Discover exclusive journeys across history. From the Belle Époque to
-          the age of dinosaurs, your next adventure awaits.
+          Découvrez des voyages exclusifs à travers l&apos;histoire. De la Belle Époque
+          à l&apos;ère des dinosaures, votre prochaine aventure vous attend.
         </motion.p>
 
         <motion.a
@@ -46,7 +46,7 @@ export default function Hero() {
           transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
           className="inline-block px-8 py-4 bg-gold text-background font-semibold rounded-full hover:bg-gold-light transition-colors duration-300 shadow-lg shadow-gold/20"
         >
-          Explore Destinations
+          Explorer les Destinations
         </motion.a>
       </div>
     </section>

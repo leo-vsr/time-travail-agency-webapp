@@ -14,7 +14,7 @@ export default function Chatbot() {
     {
       role: "assistant",
       content:
-        "Welcome to TimeTravel Agency! I'm your luxury travel advisor. How can I help you plan your journey through time?",
+        "Bienvenue chez TimeTravel Agency ! Je suis votre conseiller de voyage de luxe. Comment puis-je vous aider à planifier votre voyage à travers le temps ?",
     },
   ]);
   const [input, setInput] = useState("");
@@ -50,7 +50,7 @@ export default function Chatbot() {
         ...newMessages,
         {
           role: "assistant",
-          content: "I apologize, I'm having trouble connecting right now. Please try again in a moment.",
+          content: "Je suis désolé, j'ai des difficultés de connexion. Veuillez réessayer dans un instant.",
         },
       ]);
     } finally {
@@ -119,8 +119,8 @@ export default function Chatbot() {
           >
             {/* Header */}
             <div className="px-5 py-4 border-b border-white/5 bg-surface-light">
-              <h3 className="font-semibold text-sm">TimeTravel Assistant</h3>
-              <p className="text-xs text-muted">Your luxury travel advisor</p>
+              <h3 className="font-semibold text-sm">Assistant TimeTravel</h3>
+              <p className="text-xs text-muted">Votre conseiller de voyage de luxe</p>
             </div>
 
             {/* Messages */}
@@ -165,7 +165,7 @@ export default function Chatbot() {
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
                   onKeyDown={handleKeyDown}
-                  placeholder="Ask about our destinations..."
+                  placeholder="Posez une question sur nos destinations..."
                   className="flex-1 bg-surface-light border border-white/10 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-gold/50 transition-colors placeholder:text-muted"
                 />
                 <button
@@ -173,7 +173,7 @@ export default function Chatbot() {
                   disabled={loading || !input.trim()}
                   className="px-4 py-2.5 bg-gold text-background rounded-xl text-sm font-medium hover:bg-gold-light transition-colors disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
                 >
-                  Send
+                  Envoyer
                 </button>
               </div>
             </div>

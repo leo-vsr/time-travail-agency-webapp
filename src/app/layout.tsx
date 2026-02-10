@@ -15,9 +15,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "TimeTravel Agency — Travel Beyond Time",
+  title: "TimeTravel Agency — Voyagez au-delà du Temps",
   description:
-    "Discover exclusive journeys across history. Visit Paris 1889, the Cretaceous period, and Renaissance Florence.",
+    "Découvrez des voyages exclusifs à travers l'histoire. Visitez Paris 1889, le Crétacé et la Florence de la Renaissance.",
 };
 
 export default function RootLayout({
@@ -26,7 +26,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark">
+    <html lang="fr" className="dark">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background text-foreground`}
       >
