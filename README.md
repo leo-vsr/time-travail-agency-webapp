@@ -8,7 +8,7 @@ A luxury futuristic time travel agency webapp built as a school project. Browse 
 - **TypeScript**
 - **Tailwind CSS v4**
 - **Framer Motion** — scroll & hover animations
-- **OpenAI-compatible API** — AI chatbot backend
+- **OpenRouter API** — AI chatbot backend (free model: `mistralai/mistral-small:free`)
 
 ## Features
 
@@ -22,7 +22,7 @@ A luxury futuristic time travel agency webapp built as a school project. Browse 
 ## AI Tools Used
 
 - **Windsurf Cascade** — AI pair-programming assistant used to scaffold and build the entire project
-- **OpenAI API** (or compatible) — powers the in-app chatbot assistant
+- **OpenRouter** — free AI API provider powering the in-app chatbot assistant
 
 ## Getting Started
 
@@ -39,21 +39,33 @@ cd Webapp
 npm install
 ```
 
-### Environment Variables
+### Configuration de l'IA (OpenRouter)
 
-Copy the example file and fill in your API key:
+Le chatbot utilise [OpenRouter](https://openrouter.ai) comme fournisseur IA avec un modèle **gratuit**.
+
+1. Créer un compte sur [https://openrouter.ai](https://openrouter.ai)
+2. Générer une clé API dans le dashboard
+3. Copier le fichier d'exemple et ajouter votre clé :
 
 ```bash
 cp .env.example .env.local
 ```
 
-Edit `.env.local`:
+4. Éditer `.env.local` :
+
+```
+AI_API_KEY=sk-or-xxxxxxxxxxxxxxxx
+AI_API_BASE=https://openrouter.ai/api/v1
+AI_MODEL=mistralai/mistral-small:free
+```
 
 | Variable | Required | Description |
 |---|---|---|
-| `AI_API_KEY` | Yes | Your OpenAI (or compatible) API key |
-| `AI_API_BASE` | No | Custom API base URL (defaults to `https://api.openai.com/v1`) |
-| `AI_MODEL` | No | Model name (defaults to `gpt-3.5-turbo`) |
+| `AI_API_KEY` | Yes | Votre clé API OpenRouter |
+| `AI_API_BASE` | No | URL de base (défaut : `https://openrouter.ai/api/v1`) |
+| `AI_MODEL` | No | Modèle (défaut : `mistralai/mistral-small:free`, fallback : `qwen/qwen2.5-7b-instruct:free`) |
+
+> **Note :** Ne jamais commit `.env.local`. Le fichier `.env.example` est fourni comme référence.
 
 ### Run Locally
 
@@ -74,7 +86,10 @@ npm start
 
 1. Push the repo to GitHub
 2. Import the project on [vercel.com](https://vercel.com)
-3. Add the environment variable `AI_API_KEY` in **Settings → Environment Variables**
+3. Add environment variables in **Settings → Environment Variables** :
+   - `AI_API_KEY` = votre clé OpenRouter
+   - `AI_API_BASE` = `https://openrouter.ai/api/v1`
+   - `AI_MODEL` = `mistralai/mistral-small:free`
 4. Deploy — zero extra config needed
 
 ## Project Structure

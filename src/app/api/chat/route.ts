@@ -14,14 +14,16 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const apiBase = process.env.AI_API_BASE || "https://api.openai.com/v1";
-    const model = process.env.AI_MODEL || "gpt-3.5-turbo";
+    const apiBase = process.env.AI_API_BASE || "https://openrouter.ai/api/v1";
+    const model = process.env.AI_MODEL || "mistralai/mistral-small:free";
 
     const response = await fetch(`${apiBase}/chat/completions`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${apiKey}`,
+        "HTTP-Referer": "http://localhost:3000",
+        "X-Title": "TimeTravel Agency Project",
       },
       body: JSON.stringify({
         model,
