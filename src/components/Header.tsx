@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion, useMotionValueEvent, useScroll, AnimatePresence } from "framer-motion";
@@ -14,24 +14,15 @@ const navLinks = [
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [hidden, setHidden] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-  const lastScrollY = useRef(0);
   const { scrollY } = useScroll();
 
   useMotionValueEvent(scrollY, "change", (latest) => {
-    const diff = latest - lastScrollY.current;
-    setScrolled(latest > 50);
-
-    if (latest < 100) {
-      setHidden(false);
-    } else if (diff > 5) {
+    if (latest > 80) {
       setHidden(true);
       setMenuOpen(false);
-    } else if (diff < -5) {
+    } else {
       setHidden(false);
     }
-
-    lastScrollY.current = latest;
   });
 
   return (
@@ -42,11 +33,7 @@ export default function Header() {
       className="fixed top-0 left-0 w-full z-50"
     >
       <div
-        className={`mx-3 sm:mx-4 mt-3 rounded-2xl transition-all duration-500 border ${
-          scrolled
-            ? "bg-white/[0.07] backdrop-blur-2xl border-white/15 shadow-[0_8px_32px_rgba(0,0,0,0.4)] py-2"
-            : "bg-white/[0.04] backdrop-blur-xl border-white/10 shadow-[0_4px_24px_rgba(0,0,0,0.2)] py-3"
-        }`}
+        className="mx-3 sm:mx-4 mt-3 rounded-2xl transition-all duration-500 border bg-white/[0.04] backdrop-blur-xl border-white/10 shadow-[0_4px_24px_rgba(0,0,0,0.2)] py-3"
       >
         <div className="max-w-7xl mx-auto flex items-center justify-between px-5 sm:px-6">
           {/* Logo */}
@@ -59,17 +46,13 @@ export default function Header() {
               <Image
                 src="/assets/logo.png"
                 alt="TimeTravel Agency"
-                width={48}
-                height={48}
-                className={`transition-all duration-500 drop-shadow-[0_0_8px_rgba(201,168,76,0.4)] group-hover:drop-shadow-[0_0_16px_rgba(201,168,76,0.6)] ${
-                  scrolled ? "w-9 h-9" : "w-12 h-12"
-                }`}
+                width={56}
+                height={56}
+                className="w-14 h-14 transition-all duration-500 drop-shadow-[0_0_8px_rgba(201,168,76,0.4)] group-hover:drop-shadow-[0_0_16px_rgba(201,168,76,0.6)]"
               />
             </motion.div>
             <span
-              className={`font-bold tracking-wider text-gold transition-all duration-500 group-hover:text-gold-light ${
-                scrolled ? "text-base" : "text-lg"
-              }`}
+              className="text-lg font-bold tracking-wider text-gold transition-all duration-500 group-hover:text-gold-light"
             >
               TimeTravel
               <span className="text-white/50 font-normal ml-1.5">Agency</span>
