@@ -1,8 +1,9 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useRef } from "react";
 import Link from "next/link";
-import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
+import { motion, useMotionValueEvent, useScroll, AnimatePresence } from "framer-motion";
 
 const navLinks = [
   { label: "Accueil", href: "#hero" },
@@ -12,87 +13,123 @@ const navLinks = [
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [hidden, setHidden] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const lastScrollY = useRef(0);
+  const { scrollY } = useScroll();
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  useMotionValueEvent(scrollY, "change", (latest) => {
+    const diff = latest - lastScrollY.current;
+    setScrolled(latest > 50);
+
+    if (latest < 100) {
+      setHidden(false);
+    } else if (diff > 5) {
+      setHidden(true);
+      setMenuOpen(false);
+    } else if (diff < -5) {
+      setHidden(false);
+    }
+
+    lastScrollY.current = latest;
+  });
 
   return (
     <motion.header
       initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.6, ease: "easeOut" }}
-      className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${
-        scrolled
-          ? "bg-background/95 backdrop-blur-xl border-b border-white/10 shadow-lg shadow-black/5"
-          : "bg-background/80 backdrop-blur-md border-b border-white/5"
-      }`}
+      animate={{ y: hidden ? -120 : 0 }}
+      transition={{ duration: 0.35, ease: "easeInOut" }}
+      className="fixed top-0 left-0 w-full z-50"
     >
-      <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
-        <Link
-          href="/"
-          className="text-xl font-bold tracking-wider text-gold hover:scale-105 transition-transform duration-300"
-        >
-          TimeTravel Agency
-        </Link>
-
-        {/* Desktop nav */}
-        <nav className="hidden md:flex items-center gap-8">
-          {navLinks.map((link, i) => (
-            <motion.a
-              key={link.href}
-              href={link.href}
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.1 + i * 0.1 }}
-              className="text-sm text-muted hover:text-gold transition-all duration-300 relative group"
+      <div
+        className={`mx-3 sm:mx-4 mt-3 rounded-2xl transition-all duration-500 border ${
+          scrolled
+            ? "bg-white/[0.07] backdrop-blur-2xl border-white/15 shadow-[0_8px_32px_rgba(0,0,0,0.4)] py-2"
+            : "bg-white/[0.04] backdrop-blur-xl border-white/10 shadow-[0_4px_24px_rgba(0,0,0,0.2)] py-3"
+        }`}
+      >
+        <div className="max-w-7xl mx-auto flex items-center justify-between px-5 sm:px-6">
+          {/* Logo */}
+          <Link href="/" className="flex items-center gap-3 group">
+            <motion.div
+              whileHover={{ rotate: 360 }}
+              transition={{ duration: 0.8, ease: "easeInOut" }}
+              className="relative"
             >
-              {link.label}
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gold transition-all duration-300 group-hover:w-full" />
-            </motion.a>
-          ))}
-        </nav>
+              <Image
+                src="/assets/logo.png"
+                alt="TimeTravel Agency"
+                width={48}
+                height={48}
+                className={`transition-all duration-500 drop-shadow-[0_0_8px_rgba(201,168,76,0.4)] group-hover:drop-shadow-[0_0_16px_rgba(201,168,76,0.6)] ${
+                  scrolled ? "w-9 h-9" : "w-12 h-12"
+                }`}
+              />
+            </motion.div>
+            <span
+              className={`font-bold tracking-wider text-gold transition-all duration-500 group-hover:text-gold-light ${
+                scrolled ? "text-base" : "text-lg"
+              }`}
+            >
+              TimeTravel
+              <span className="text-white/50 font-normal ml-1.5">Agency</span>
+            </span>
+          </Link>
 
-        {/* Mobile hamburger */}
-        <motion.button
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.95 }}
-          className="md:hidden flex flex-col gap-1.5 p-2"
-          onClick={() => setMenuOpen(!menuOpen)}
-          aria-label="Toggle menu"
-        >
-          <span
-            className={`block w-6 h-0.5 bg-gold transition-transform duration-300 ${
-              menuOpen ? "rotate-45 translate-y-2" : ""
-            }`}
-          />
-          <span
-            className={`block w-6 h-0.5 bg-gold transition-opacity duration-300 ${
-              menuOpen ? "opacity-0" : ""
-            }`}
-          />
-          <span
-            className={`block w-6 h-0.5 bg-gold transition-transform duration-300 ${
-              menuOpen ? "-rotate-45 -translate-y-2" : ""
-            }`}
-          />
-        </motion.button>
+          {/* Desktop nav */}
+          <nav className="hidden md:flex items-center gap-1">
+            {navLinks.map((link, i) => (
+              <motion.a
+                key={link.href}
+                href={link.href}
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.1 + i * 0.1 }}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.97 }}
+                className="text-sm text-white/60 hover:text-white px-4 py-2 rounded-xl hover:bg-white/[0.08] transition-all duration-300 relative group"
+              >
+                {link.label}
+                <span className="absolute bottom-0.5 left-1/2 -translate-x-1/2 w-0 h-[2px] bg-gold rounded-full transition-all duration-300 group-hover:w-6" />
+              </motion.a>
+            ))}
+          </nav>
+
+          {/* Mobile hamburger */}
+          <motion.button
+            whileTap={{ scale: 0.9 }}
+            className="md:hidden flex flex-col gap-1.5 p-2 rounded-xl hover:bg-white/[0.08] transition-colors"
+            onClick={() => setMenuOpen(!menuOpen)}
+            aria-label="Toggle menu"
+          >
+            <span
+              className={`block w-5 h-0.5 bg-gold transition-all duration-300 origin-center ${
+                menuOpen ? "rotate-45 translate-y-[4px]" : ""
+              }`}
+            />
+            <span
+              className={`block w-5 h-0.5 bg-gold transition-all duration-300 ${
+                menuOpen ? "opacity-0 scale-0" : ""
+              }`}
+            />
+            <span
+              className={`block w-5 h-0.5 bg-gold transition-all duration-300 origin-center ${
+                menuOpen ? "-rotate-45 -translate-y-[4px]" : ""
+              }`}
+            />
+          </motion.button>
+        </div>
       </div>
 
       {/* Mobile menu */}
       <AnimatePresence>
         {menuOpen && (
           <motion.nav
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.3 }}
-            className="md:hidden bg-surface border-t border-white/5 px-6 py-4 flex flex-col gap-4 overflow-hidden"
+            initial={{ opacity: 0, y: -10, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -10, scale: 0.98 }}
+            transition={{ duration: 0.25, ease: "easeOut" }}
+            className="md:hidden mx-3 sm:mx-4 mt-2 rounded-2xl bg-white/[0.07] backdrop-blur-2xl border border-white/15 shadow-[0_8px_32px_rgba(0,0,0,0.4)] px-5 py-4 flex flex-col gap-1 overflow-hidden"
           >
             {navLinks.map((link, i) => (
               <motion.a
@@ -101,9 +138,9 @@ export default function Header() {
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -20 }}
-                transition={{ duration: 0.3, delay: i * 0.1 }}
+                transition={{ duration: 0.25, delay: i * 0.05 }}
                 onClick={() => setMenuOpen(false)}
-                className="text-sm text-muted hover:text-gold transition-colors duration-300"
+                className="text-sm text-white/60 hover:text-white px-4 py-3 rounded-xl hover:bg-white/[0.08] transition-all duration-300"
               >
                 {link.label}
               </motion.a>
